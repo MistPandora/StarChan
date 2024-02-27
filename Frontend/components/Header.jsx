@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import { Popover } from 'react-tiny-popover';
 import { useCookies } from 'react-cookie';
 
-import { LoadingIcon } from '../modules/LoadingIcon';
+import { LoadingIcon } from '../modules';
 import '@vivid-planet/react-image/dist/react-image.css';
 
 

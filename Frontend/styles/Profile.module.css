@@ -137,3 +137,7 @@
     opacity: 1 !important;
     margin-top: 50px !important;
 }
+
+.errorMessage {
+    color: #d72222
+}

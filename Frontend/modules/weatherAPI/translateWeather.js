@@ -1,5 +1,5 @@
 {/* Traduit les résultats de weather en français parce que personne parle anglais dans c'te pays */ }
-const translateWeather = (weather) => {
+export const translateWeather = (weather) => {
 
     if (weather) {
         const weatherObj = {
@@ -18,5 +18,3 @@ const translateWeather = (weather) => {
         return weatherObj[weather]
     }
 }
-
-module.exports = translateWeather;

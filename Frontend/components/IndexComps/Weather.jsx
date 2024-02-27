@@ -1,8 +1,6 @@
 import styles from '../../styles/Index.module.css';
 
-import TranslateWeather from '../../modules/weatherAPI/translateWeather';
-import FormatWeatherHours from '../../modules/weatherAPI/formatWeatherHours';
-import FindWeatherImage from '../../modules/weatherAPI/findWeatherImage';
+import { TranslateWeather, FormatWeatherHours, FindWeatherImage } from '../../modules';
 
 function Weather(props) {
 

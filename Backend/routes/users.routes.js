@@ -34,7 +34,6 @@ router.get('/currentUser', verifyTokenValidity, async (req, res) => {
         const userId = req.user;
 
         const queries = Object.getOwnPropertyNames(req.query).join(" +");
-        console.log(queries);
         const user = await User.findById(userId).select(`+${queries}`).lean();
 
         if (!user) {
@@ -149,7 +148,8 @@ router.put('/profile', verifyTokenValidity, async (req, res) => {
         res.json({ result: true });
     } catch (error) {
         console.error('An error occurred:', error.message);
-        res.status(500).json({ result: false });
+        const existingKey = Object.keys(error.keyValue);
+        res.status(500).json({ result: false, existingKey });
     }
 })
 

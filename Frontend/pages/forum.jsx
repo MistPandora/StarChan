@@ -5,9 +5,7 @@ import styles from '../styles/Forum.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
-import Category from '../components/ForumComps/Category';
-import NewCategory from '../components/ForumComps/NewCategory';
-import NewSubjects from '../components/ForumComps/NewSubjects';
+import { Category, NewCategory, NewSubjects } from '../components/ForumComps';
 
 import Modal from 'react-modal';
 import { useState } from 'react';
@@ -18,9 +16,7 @@ import { useFetch } from '../hooks';
 import Header from '../components/Header';
 import ForbiddenAccess from '../components/ForbiddenAccess';
 
-import forbiddenWords from '../modules/forbiddenWords';
-import toggleModal from '../modules/toggleModal';
-import { LoadingIcon } from '../modules/LoadingIcon';
+import { forbiddenWords, toggleModal, LoadingIcon } from '../modules';
 import '@vivid-planet/react-image/dist/react-image.css';
 
 Modal.setAppElement('body');

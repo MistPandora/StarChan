@@ -1,4 +1,4 @@
-const checkUserForm = (username = "", email = "", password = "", confirmPassword = "") => {
+export const checkUserForm = (username = "", email = "", password = "", confirmPassword = "") => {
     const usernameRegex = /^[A-Za-zÀ-Üà-ü0-9_-]+$/;
     const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
@@ -26,11 +26,10 @@ const checkUserForm = (username = "", email = "", password = "", confirmPassword
     return {
         checkSpecialCharacter,
         checkUsernameLength,
+        isUsernameValid,
         isEmailValid,
         isPasswordValid,
         isConfirmPasswordValid,
         isFormValid
     }
 }
-
-module.exports = checkUserForm

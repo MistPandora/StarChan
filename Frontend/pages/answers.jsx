@@ -6,15 +6,14 @@ import Modal from 'react-modal';
 import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 
+import { useFetch } from '../hooks';
+
 import Header from '../components/Header';
 import ForbiddenAccess from '../components/ForbiddenAccess';
-import NewAnswer from '../components/ForumComps/NewAnswer';
-import Answer from '../components/ForumComps/Answer';
+import { Answer, NewAnswer } from '../components/ForumComps';
 
-import { LoadingIcon } from '../modules/LoadingIcon';
+import { LoadingIcon, toggleModal } from '../modules';
 import '@vivid-planet/react-image/dist/react-image.css';
-import { useFetch } from '../hooks';
-import toggleModal from '../modules/toggleModal';
 
 Modal.setAppElement('body')
 

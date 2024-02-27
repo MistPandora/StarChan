@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 import { useState } from 'react';
-import checkUserForm from '../../modules/checkUserForm';
+import checkUserForm from '../../modules';
 
 
 function SignUp(props) {

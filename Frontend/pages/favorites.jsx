@@ -10,7 +10,7 @@ import { useCookies } from 'react-cookie';
 import Header from '../components/Header';
 import Pictures from '../components/GalleryComps/Pictures';
 
-import { LoadingIcon } from '../modules/LoadingIcon';
+import { LoadingIcon } from '../modules';
 import '@vivid-planet/react-image/dist/react-image.css';
 
 Modal.setAppElement('body');

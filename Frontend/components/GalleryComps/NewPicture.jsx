@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import { Tooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
 
-import forbiddenWords from '../../modules/forbiddenWords';
+import forbiddenWords from '../../modules';
 
 
 function NewPicture(props) {

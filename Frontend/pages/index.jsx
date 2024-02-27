@@ -11,7 +11,7 @@ import { useFetch } from '../hooks/useFetch';
 import Header from '../components/Header';
 import { Weather, News } from '../components/IndexComps'
 
-import { LoadingIcon } from '../modules/LoadingIcon';
+import { LoadingIcon } from '../modules';
 import '@vivid-planet/react-image/dist/react-image.css';
 
 

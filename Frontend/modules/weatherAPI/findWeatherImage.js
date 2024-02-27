@@ -1,5 +1,5 @@
 {/* Applique les image appropriées en fonction de la météo actuelle */ }
-const findWeatherImage = (weather) => {
+export const findWeatherImage = (weather) => {
     if (weather) {
         const arr = ['Mist', 'Fog', 'Smoke', 'Haze', 'Clouds'];
 
@@ -18,5 +18,3 @@ const findWeatherImage = (weather) => {
 
 
 }
-
-module.exports = findWeatherImage

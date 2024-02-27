@@ -13,9 +13,9 @@ import 'react-tooltip/dist/react-tooltip.css';
 import ForbiddenAccess from '../components/ForbiddenAccess';
 import Header from '../components/Header';
 
-import { LoadingIcon } from '../modules/LoadingIcon';
+import { toggleModal, LoadingIcon, checkUserForm } from '../modules';
 import '@vivid-planet/react-image/dist/react-image.css';
-import checkUserForm from '../modules/checkUserForm';
+
 
 Modal.setAppElement('body');
 
@@ -29,7 +29,8 @@ function ProfilePage() {
     const [confirmUpdatedPassword, setConfirmUpdatedPassword] = useState('');
     const [imgFile, setImgFile] = useState(null);
     const [uploadSent, setUploadSent] = useState(false);
-    const [modalIsOpen, setIsOpen] = useState(false);
+    const [isLoadingModalOpen, setIsLoadingModalOpen] = useState(false);
+    const [errorKey, setErrorKey] = useState("");
     const [cookies, setCookies, removeCookies] = useCookies();
 
     useEffect(() => {
@@ -41,7 +42,6 @@ function ProfilePage() {
             const response = await fetch(`${process.env.SERVER_ADRESS}/users/currentUser?email=true&createdSubjects=true`, config);
             const data = await response.json();
             if (data.result) {
-                console.log(data);
                 setUpdatedUsername(data.user.username);
                 setUpdatedEmail(data.user.email);
                 setProfilePicture(data.user.pictureLink);
@@ -53,17 +53,9 @@ function ProfilePage() {
         return <ForbiddenAccess />
     }
 
+    const { checkSpecialCharacter, checkUsernameLength, isUsernameValid, isEmailValid, isPasswordValid, isConfirmPasswordValid, isFormValid } = checkUserForm(updatedUsername, updatedEmail, updatedPassword, confirmUpdatedPassword);
 
-    const { checkSpecialCharacter, checkUsernameLength, isEmailValid, isPasswordValid, isConfirmPasswordValid, isFormValid } = checkUserForm(updatedUsername, updatedEmail, updatedPassword, confirmUpdatedPassword);
-
-
-    function openModal() {
-        setIsOpen(true);
-    }
-
-    function closeModal() {
-        setIsOpen(false);
-    }
+    const isFormValidWithoutPassword = isUsernameValid && isEmailValid && updatedPassword === "" && confirmUpdatedPassword == "";
 
     const getImgFileUrl = async () => {
         const formData = new FormData();
@@ -87,7 +79,7 @@ function ProfilePage() {
         const updatedPictureLink = imgFile ? await getImgFileUrl() : profilePicture;
 
         const config = {
-            method: 'PATCH',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
                 'authorization': `Bearer ${cookies.token}`
@@ -95,16 +87,18 @@ function ProfilePage() {
             body: JSON.stringify({ updatedUsername, updatedEmail, updatedPassword, updatedPictureLink }),
         }
 
-        await fetch(`${process.env.SERVER_ADRESS}/users/profile`, config)
+        const response = await fetch(`${process.env.SERVER_ADRESS}/users/profile`, config);
+        const data = await response.json();
 
+        data.existingKey ? setErrorKey(data.existingKey) : setErrorKey("");
         setUpdatedPassword('');
         setConfirmUpdatedPassword('');
     };
 
     const loadingUpdate = async () => {
-        openModal();
-        await updateProfile(updatedUsername, updatedEmail, updatedPassword)
-        closeModal();
+        toggleModal(setIsLoadingModalOpen, true);
+        await updateProfile();
+        toggleModal(setIsLoadingModalOpen, false);
         setUploadSent(!uploadSent);
     }
 
@@ -161,6 +155,11 @@ function ProfilePage() {
                             {!checkUsernameLength && updatedUsername
                                 && <p className={styles.warning}>Votre pseudo doit contenir entre 4 et 15 caractères</p>
                             }
+
+                            {/* Affichage du message d'avertissement si le pseudo est déjà pris */}
+                            {errorKey == "username"
+                                && <p className={styles.warning}>Ce pseudo est déjà utilisé</p>
+                            }
                         </div>
 
                         <div className={styles.inputContainer}>
@@ -170,6 +169,9 @@ function ProfilePage() {
                             {/* Affichage du message d'avertissement pour une adresse e-mail invalide */}
                             {!isEmailValid && updatedEmail
                                 && <p className={styles.warning}>Veuillez entrer un email valide</p>
+                            }
+                            {errorKey == "email"
+                                && <p className={styles.warning}>Cet email est déjà utilisé</p>
                             }
                         </div>
 
@@ -194,7 +196,7 @@ function ProfilePage() {
                         </div>
 
                         {/* Affichage du bouton "S'inscrire" activé ou désactivé en fonction de la validité du formulaire */}
-                        {isFormValid
+                        {isFormValid || isFormValidWithoutPassword
                             ?
                             <button className={`btn newSubject ${styles.updateBtn}`} id="update" onClick={() => loadingUpdate()}>Enregistrer</button>
                             :
@@ -202,8 +204,8 @@ function ProfilePage() {
                         }
 
                         <Modal
-                            isOpen={modalIsOpen}
-                            onRequestClose={closeModal}
+                            isOpen={isLoadingModalOpen}
+                            onRequestClose={() => toggleModal(setIsLoadingModalOpen, false)}
                             contentLabel="Example Modal"
                             className={styles.Modal}
                             overlayClassName={styles.Overlay}
@@ -217,6 +219,7 @@ function ProfilePage() {
                                 </div>
                             }
                         </Modal>
+
                     </div>
                 </div>
             </>)

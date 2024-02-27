@@ -1,4 +1,4 @@
-const formatWeatherHours = (str) => {
+export const formatWeatherHours = (str) => {
 
     //str = 12:52:15 AM
 
@@ -19,5 +19,3 @@ const formatWeatherHours = (str) => {
 
     return newHourArr.join('h') //On rejoint les éléments du tableau par la lettre h, on aura donc notre heure formatée
 }
-
-module.exports = formatWeatherHours;

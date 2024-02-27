@@ -13,7 +13,6 @@ router.post('/', verifyTokenValidity, async (req, res) => {
         const resultMove = await req.files.image.mv(photoPath);
 
         if (!resultMove) {
-            console.log("coucou");
             const resultCloudinary = await cloudinary.uploader.upload(photoPath, { folder: `StarChan/${Object.keys(req.query)}` }); // "gallery", "forum" or "profile"
             fs.unlinkSync(photoPath);
             res.json({ result: true, url: resultCloudinary.secure_url });

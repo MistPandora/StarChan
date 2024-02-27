@@ -12,7 +12,7 @@ import 'react-tooltip/dist/react-tooltip.css';
 
 import { useFetch } from '../../hooks';
 
-import forbiddenWords from '../../modules/forbiddenWords';
+import forbiddenWords from '../../modules';
 
 
 function NewSubjects(props) {
