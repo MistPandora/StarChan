@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 const timeAgo = require('../modules/timeAgo');
 const cloudinary = require('cloudinary').v2;
 
